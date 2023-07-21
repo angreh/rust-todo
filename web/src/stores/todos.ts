@@ -1,21 +1,21 @@
 import { ref } from "vue";
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { list, create } from "../services/todo";
+import { list, create, remove, get, update } from "../services/todo";
 
 export const useTodoStore = defineStore("todo", () => {
   const todos = ref<Array<any>>([]);
 
   async function todo_list() {
+    todos.value = [];
+
     const result = await list();
 
-    const list_todos: any[] = result.data.list;
+    todos.value = result.data.list
+  }
 
-    const len = list_todos.length;
-    let item;
-    for (let i = 0; i < len; i++) {
-      item = list_todos[i];
-      todos.value.push(item);
-    }
+  async function todo_remove(id: string) {
+    await remove(id);
+    todo_list();
   }
 
   async function todo_create(description: string) {
@@ -23,14 +23,26 @@ export const useTodoStore = defineStore("todo", () => {
     todo_list();
   }
 
+  async function todo_get(id: string) {
+    return await get(id);
+  }
+
+  async function todo_update(item: any) {
+    await update(item);
+    todo_list();
+  }
+
+
   return {
     todo_create,
+    todo_get,
     todo_list,
+    todo_remove,
+    todo_update,
     todos,
   };
 });
 
-// make sure to pass the right store definition, `useAuth` in this case.
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useTodoStore, import.meta.hot));
 }
