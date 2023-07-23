@@ -6,7 +6,7 @@ use axum::middleware::Next;
 use axum::response::{IntoResponse, Response};
 use core::result::Result;
 
-use crate::ctx::Ctx;
+use crate::global_structs::ctx::Ctx;
 
 #[async_trait]
 impl<S: Send + Sync> FromRequestParts<S> for Ctx {

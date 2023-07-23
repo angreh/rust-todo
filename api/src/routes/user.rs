@@ -3,7 +3,7 @@ use axum::Router;
 use axum::middleware;
 
 use crate::models::user::list;
-use crate::state::AppState;
+use crate::global_structs::app_state::AppState;
 
 pub fn routes(state: AppState) -> Router {
     Router::new()

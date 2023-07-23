@@ -2,7 +2,7 @@ use axum::{extract::Path, extract::State, response::IntoResponse, Json};
 use mongodb::bson::{doc, oid::ObjectId, Document};
 use serde_json::json;
 
-use crate::state::AppState;
+use crate::global_structs::app_state::AppState;
 
 use super::structs::{TodoCreateUpdate};
 
@@ -29,5 +29,5 @@ pub async fn handler(
         .await
         .unwrap();
 
-    Json(json!({ "status": true }))
+    Json(json!({ "success": true }))
 }

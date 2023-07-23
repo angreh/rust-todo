@@ -4,7 +4,7 @@ use mongodb::bson::{doc, Document};
 use serde_json::json;
 
 use super::structs::TodoCreateUpdate;
-use crate::state::AppState;
+use crate::global_structs::app_state::AppState;
 
 pub async fn handler(
     State(state): State<AppState>,
@@ -18,5 +18,5 @@ pub async fn handler(
         .await
         .unwrap();
 
-    Json(json!({ "status": true, "id": result.inserted_id }))
+    Json(json!({ "success": true, "id": result.inserted_id }))
 }

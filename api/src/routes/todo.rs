@@ -2,7 +2,7 @@ use axum::routing::{delete, get};
 use axum::Router;
 
 use crate::models::todo::{create, delete, get, list, update};
-use crate::state::AppState;
+use crate::global_structs::app_state::AppState;
 
 pub fn routes(state: AppState) -> Router {
     Router::new()

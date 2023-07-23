@@ -4,7 +4,7 @@ use mongodb::bson::doc;
 use serde_json::json;
 
 use super::structs::TodoGet;
-use crate::state::AppState;
+use crate::global_structs::app_state::AppState;
 
 pub async fn handler(State(state): State<AppState>) -> impl IntoResponse {
     println!("HANDLER: todo_list");
@@ -14,5 +14,5 @@ pub async fn handler(State(state): State<AppState>) -> impl IntoResponse {
     let cursor = collection.find(doc! {}, None).await.unwrap();
     let todos: Vec<TodoGet> = cursor.try_collect().await.unwrap();
 
-    Json(json!({ "status": true, "list": todos }))
+    Json(json!({ "success": true, "list": todos }))
 }

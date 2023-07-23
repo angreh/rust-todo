@@ -3,7 +3,7 @@ use axum::{http::HeaderValue, routing::get, Router};
 use tower_http::cors::{Any, CorsLayer};
 
 use crate::models::main::handler_main;
-use crate::state::AppState;
+use crate::global_structs::app_state::AppState;
 
 pub mod todo;
 pub mod user;
