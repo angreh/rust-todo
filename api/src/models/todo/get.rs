@@ -10,6 +10,8 @@ use super::structs::TodoGet;
 use crate::state::AppState;
 
 pub async fn handler(State(state): State<AppState>, Path(id): Path<String>) -> impl IntoResponse {
+    println!("HANDLER: todo_get");
+
     let collection = state.database.collection::<TodoGet>("todos");
 
     let todo = collection

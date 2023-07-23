@@ -9,6 +9,8 @@ pub async fn handler(
     State(state): State<AppState>,
     Json(todo): Json<TodoCreateUpdate>,
 ) -> impl IntoResponse {
+    println!("HANDLER: todo_create");
+
     let collection = state.database.collection::<Document>("todos");
     collection
         .insert_one(doc! {"description": todo.description}, None)

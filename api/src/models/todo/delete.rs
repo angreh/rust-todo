@@ -5,6 +5,8 @@ use serde_json::json;
 use crate::state::AppState;
 
 pub async fn handler(State(state): State<AppState>, Path(id): Path<String>) -> impl IntoResponse {
+    println!("HANDLER: todo_delete");
+
     let collection = state.database.collection::<Document>("todos");
     collection
         .delete_one(
