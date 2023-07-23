@@ -6,10 +6,12 @@ use crate::models::main::handler_main;
 use crate::state::AppState;
 
 pub mod todo;
+pub mod user;
 
 pub fn main(state: AppState) -> Router {
     Router::new()
-        .merge(todo::routes(state))
+        .merge(todo::routes(state.clone()))
+        .merge(user::routes(state.clone()))
         .route("/", get(handler_main))
         .layer(
             CorsLayer::new()

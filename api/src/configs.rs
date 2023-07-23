@@ -7,6 +7,7 @@ use super::state::AppState;
 pub async fn get_state_with_db() -> AppState {
     println!("State: create DB connection");
 
+    // ClientOptions::parse("mongodb://root:password@localhost:27017/tvr_todo?authSource=admin")
     let mut client_options =
         ClientOptions::parse("mongodb://root:password@trvmongo:27017/tvr_todo?authSource=admin")
             .await
