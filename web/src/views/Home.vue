@@ -4,6 +4,7 @@ import TodoList from "../components/List.vue";
 </script>
 
 <template>
+  Teste:
   <DefaultInput />
   <TodoList />
 </template>

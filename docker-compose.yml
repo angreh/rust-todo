@@ -1,0 +1,57 @@
+version: "3"
+services:
+  trvweb:
+    build:
+      dockerfile: web.Dockerfile
+      context: .
+    image: trv-web
+    container_name: trv-web
+    working_dir: /var/www
+    ports:
+      - 5173:5173
+    volumes:
+      - ./web:/var/www
+    networks:
+      - trv-network
+    depends_on:
+      - trvapi
+    links:
+      - trvapi
+
+  trvapi:
+    build:
+      dockerfile: api.Dockerfile
+      context: .
+    image: trv-api
+    container_name: trv-api
+    working_dir: /api
+    ports:
+      - 8080:8080
+    volumes:
+      - ./api:/api
+    # env_file:
+    #   - ./api/.env
+    networks:
+      - trv-network
+    depends_on:
+      - trvmongo
+    links:
+      - trvmongo
+
+  trvmongo:
+    image: mongo:4.4.8-focal
+    container_name: tvr-mongo
+    volumes:
+      - ./db/:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - trv-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: tvr_todo
+
+networks:
+  trv-network:
+    driver: bridge
