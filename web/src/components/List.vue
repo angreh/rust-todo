@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useTodoStore } from "../stores/todos";
+import { useTodoStore } from "@/stores/todos";
+import useEventBus from "@/composables/useEventBus";
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+import { onMounted, onBeforeUnmount } from "vue";
 
 const store = useTodoStore();
 
@@ -15,6 +16,21 @@ function remove(id: string) {
   store.todo_remove(id);
 }
 
+// event bus
+const { on, off } = useEventBus();
+function show_value(value: string) {
+  console.log(value);
+}
+
+onMounted(()=>{
+  on("todo_created", show_value);
+  on("todo_created2", show_value);
+})
+
+onBeforeUnmount(()=>{
+  off("todo_created", show_value)
+  off("todo_created2", show_value);
+})
 </script>
 
 <template>
