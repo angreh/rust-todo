@@ -10,17 +10,27 @@ export const useTodoStore = defineStore("todo", () => {
 
     const result = await list();
 
-    todos.value = result.data.list
+    todos.value = result.data.list;
   }
 
   async function todo_remove(id: string) {
     await remove(id);
-    todo_list();
+
+    // TODO: not do this if has a error
+    const index = todos.value.findIndex((item) => item._id.$oid == id);
+    todos.value.splice(index, 1);
   }
 
   async function todo_create(description: string) {
-    await create(description);
-    todo_list();
+    const result = await create(description);
+
+    // TODO: not do this if has a error
+    todos.value.push({
+      description,
+      _id: {
+        $oid: result.data.id.$oid,
+      },
+    });
   }
 
   async function todo_get(id: string) {
@@ -31,7 +41,6 @@ export const useTodoStore = defineStore("todo", () => {
     await update(item);
     todo_list();
   }
-
 
   return {
     todo_create,

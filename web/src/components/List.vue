@@ -1,47 +1,43 @@
 <script setup lang="ts">
 import { useTodoStore } from "../stores/todos";
 import { storeToRefs } from "pinia";
-import { onMounted, reactive } from "vue";
+import { onMounted } from "vue";
 
 const store = useTodoStore();
 
 const { todos } = storeToRefs(store);
-let item = reactive({
-  id: "",
-  description: "",
-});
 
 onMounted(() => {
   store.todo_list();
 });
 
-async function edit(id: string) {
-  const result = await store.todo_get(id);
-  const todo = result.data.todo;
-
-  item.description = todo.description;
-  item.id = todo._id.$oid;
-}
-
-async function save() {
-  await store.todo_update(item);
-  item.description = "";
-  item.id = "";
-}
-
 function remove(id: string) {
   store.todo_remove(id);
 }
+
 </script>
 
 <template>
-  <div v-for="(item, i) in todos" :key="i">
-    {{ item.description }} (<span @click="remove(item._id.$oid)">close</span>)
-    (<span @click="edit(item._id.$oid)">edit</span>)
-  </div>
-  <input type="text" v-model="item.description" /><button
-    @click="save"
-    :disabled="!item.description && !item.id">
-    save
-  </button>
+  <TransitionGroup name="list">
+    <div v-for="item in todos" :key="item._id.$oid">
+      {{ item.description }} (<span @click="remove(item._id.$oid)">close</span>)
+      (<span @click="() => {}">edit</span>)
+    </div>
+  </TransitionGroup>
 </template>
+
+<style>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+.list-leave-active {
+  position: absolute;
+}
+</style>

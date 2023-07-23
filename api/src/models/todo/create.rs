@@ -1,5 +1,6 @@
 use axum::{extract::State, response::IntoResponse, Json};
 use mongodb::bson::{doc, Document};
+// use mongodb::bson::Document;
 use serde_json::json;
 
 use super::structs::TodoCreateUpdate;
@@ -12,10 +13,10 @@ pub async fn handler(
     println!("HANDLER: todo_create");
 
     let collection = state.database.collection::<Document>("todos");
-    collection
+    let result = collection
         .insert_one(doc! {"description": todo.description}, None)
         .await
         .unwrap();
 
-    Json(json!({ "status": true }))
+    Json(json!({ "status": true, "id": result.inserted_id }))
 }
