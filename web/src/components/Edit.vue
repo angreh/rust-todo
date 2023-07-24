@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useTodoStore } from "../stores/todos";
 
 const store = useTodoStore();
 
+const { selecteditem } = storeToRefs(store);
+
 function save() {
-  // store.todo_remove(id);
+  store.todo_update();
 }
 </script>
 
-<template><input type="text" /><button @click="save">save</button></template>
+<template>
+  <br />
+  <input type="text" v-model="selecteditem.description" />
+  <button @click="save" :disabled="!selecteditem.id">save</button>
+</template>
