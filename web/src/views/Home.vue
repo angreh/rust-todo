@@ -5,8 +5,10 @@ import EditInput from "@/components/Edit.vue";
 </script>
 
 <template>
-  Teste:
-  <DefaultInput />
-  <TodoList />
-  <EditInput />
+  <div id="main_div">
+    Title todo thing:
+    <DefaultInput />
+    <TodoList />
+    <EditInput />
+  </div>
 </template>

@@ -1,0 +1,16 @@
+@import "./components/listItem";
+
+@import "./views/mainDiv";
+
+html,
+body {
+  background-color: black;
+}
+* {
+  color: white;
+}
+
+input {
+  background-color: peru;
+  color: black;
+}

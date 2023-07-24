@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 
 type Events = {
-  [key: string]: DispatcherEvent;
+  [key: string]: Event;
 };
 type EventCallback = (value: any) => void;
 
@@ -17,9 +17,9 @@ export default function useEventBus() {
   }
 
   function on(eventName: string, callback: EventCallback) {
-    let event: DispatcherEvent = events[eventName];
+    let event: Event = events[eventName];
     if (!event) {
-      event = new DispatcherEvent(eventName);
+      event = new Event(eventName);
       events[eventName] = event;
     }
 
@@ -43,7 +43,7 @@ export default function useEventBus() {
   };
 }
 
-class DispatcherEvent {
+class Event {
   eventName: string;
   callbacks: EventCallback[];
 
