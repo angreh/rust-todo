@@ -16,7 +16,7 @@ pub async fn handler(
     };
 
     let collection = state.database.collection::<Document>("todos");
-    let result = collection
+    let result = match collection
         .delete_one(
             doc! {
               "_id": _id,
@@ -24,7 +24,10 @@ pub async fn handler(
             None,
         )
         .await
-        .unwrap();
+    {
+        Ok(f) => f,
+        Err(_) => return Err(ApiError::ResourceActionFailNoDbConnection),
+    };
 
     if result.deleted_count == 0 {
         return Err(ApiError::ResourceDeleteFailIdNotFound { id });

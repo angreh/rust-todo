@@ -15,6 +15,7 @@ pub enum ApiError {
     // Model Errors
     ResourceDeleteFailIdNotFound { id: String },
     ResourceDeleteFailInvalidId { id: String },
+    ResourceActionFailNoDbConnection,
 }
 
 impl IntoResponse for ApiError {

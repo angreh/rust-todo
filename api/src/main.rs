@@ -51,9 +51,6 @@ async fn main_response_wrapper(
         });
 
     println!("server error: {service_error:?}");
-    // let client_error = client_status_error.unzip().1;
-    // log_request(uuid, req_method, uri, ctx, service_error, client_error).await;
-
 
     println!();
     error_response.unwrap_or(res)

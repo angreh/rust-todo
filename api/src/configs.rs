@@ -1,3 +1,4 @@
+use mongodb::bson::doc;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use tokio::time::Duration;
@@ -5,9 +6,9 @@ use tokio::time::Duration;
 use crate::global_structs::app_state::AppState;
 
 pub async fn get_state_with_db() -> AppState {
-    println!("State: create DB connection");
+    println!("State: Create DB connection");
 
-    // ClientOptions::parse("mongodb://root:password@trvmongo:27017/tvr_todo?authSource=admin")
+    // trvmongo:27017
     let mut client_options =
         ClientOptions::parse("mongodb://root:password@trvmongo:27017/tvr_todo?authSource=admin")
             .await
@@ -18,5 +19,13 @@ pub async fn get_state_with_db() -> AppState {
     let client = Client::with_options(client_options).unwrap();
 
     let database = client.database("tvr_todo");
+
+    database
+        .run_command(doc! {"ping":1}, None)
+        .await
+        .expect("Fail connection with DB!");
+
+    println!("State: Successfully conected!");
+
     AppState { database }
 }
