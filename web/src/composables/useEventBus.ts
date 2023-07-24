@@ -1,6 +1,11 @@
 import { reactive } from "vue";
 
-const events = reactive<{ [key: string]: any }>({});
+type Events = {
+  [key: string]: DispatcherEvent;
+};
+type EventCallback = (value: any) => void;
+
+const events = reactive<Events>({});
 
 export default function useEventBus() {
   function emit(eventName: string, data: any = null) {
@@ -11,7 +16,7 @@ export default function useEventBus() {
     }
   }
 
-  function on(eventName: string, callback: (value: any) => void) {
+  function on(eventName: string, callback: EventCallback) {
     let event: DispatcherEvent = events[eventName];
     if (!event) {
       event = new DispatcherEvent(eventName);
@@ -21,7 +26,7 @@ export default function useEventBus() {
     event.registerCallback(callback);
   }
 
-  function off(eventName: string, callback: any) {
+  function off(eventName: string, callback: EventCallback) {
     const event = events[eventName];
     if (event && event.callbacks.indexOf(callback) > -1) {
       event.unregisterCallback(callback);
@@ -40,18 +45,18 @@ export default function useEventBus() {
 
 class DispatcherEvent {
   eventName: string;
-  callbacks: { (value: any): void }[];
+  callbacks: EventCallback[];
 
   constructor(eventName: string) {
     this.eventName = eventName;
     this.callbacks = [];
   }
 
-  registerCallback(callback: (value: any) => void) {
+  registerCallback(callback: EventCallback) {
     this.callbacks.push(callback);
   }
 
-  unregisterCallback(callback: (value: any) => void) {
+  unregisterCallback(callback: EventCallback) {
     const index = this.callbacks.indexOf(callback);
     if (index > -1) {
       this.callbacks.splice(index, 1);
