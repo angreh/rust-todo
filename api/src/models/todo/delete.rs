@@ -12,7 +12,7 @@ pub async fn handler(
 
     let _id = match ObjectId::parse_str(id.clone()) {
         Ok(f) => f,
-        Err(_) => return Err(ApiError::ResourceDeleteFailInvalidId { id }),
+        Err(_) => return Err(ApiError::ResourceActionFailInvalidId { id }),
     };
 
     let collection = state.database.collection::<Document>("todos");
@@ -30,7 +30,7 @@ pub async fn handler(
     };
 
     if result.deleted_count == 0 {
-        return Err(ApiError::ResourceDeleteFailIdNotFound { id });
+        return Err(ApiError::ResourceActionFailIdNotFound { id });
     }
 
     Ok(Json(json!({ "success": true })))

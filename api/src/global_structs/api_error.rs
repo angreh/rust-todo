@@ -1,8 +1,9 @@
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 use serde::Serialize;
+use strum_macros::AsRefStr;
 
-#[derive(Clone, Debug, Serialize, strum_macros::AsRefStr)]
+#[derive(Clone, Debug, Serialize, AsRefStr)]
 #[serde(tag = "type", content = "data")]
 pub enum ApiError {
     // LoginFail,
@@ -13,9 +14,13 @@ pub enum ApiError {
     // AuthFailCtxNotInRequestExt,
 
     // Model Errors
-    ResourceDeleteFailIdNotFound { id: String },
-    ResourceDeleteFailInvalidId { id: String },
+    ResourceActionFailIdNotFound { id: String },
+    ResourceActionFailInvalidId { id: String },
     ResourceActionFailNoDbConnection,
+    // ResourceActionFail,
+
+    // Others
+    InternalError,
 }
 
 impl IntoResponse for ApiError {
@@ -39,9 +44,8 @@ impl ApiError {
             // Self::AuthFailNoAuthTokenCookie
             // | Self::AuthFailTokenWrongFormat
             // | Self::AuthFailCtxNotInRequestExt => (StatusCode::FORBIDDEN, ClientError::NO_AUTH),
-
-            Self::ResourceDeleteFailIdNotFound { .. }
-            | Self::ResourceDeleteFailInvalidId { .. } => {
+            Self::ResourceActionFailIdNotFound { .. }
+            | Self::ResourceActionFailInvalidId { .. } => {
                 (StatusCode::BAD_REQUEST, ClientError::INVALID_PARAMS)
             }
             // Fallback
@@ -53,7 +57,7 @@ impl ApiError {
     }
 }
 
-#[derive(Debug, strum_macros::AsRefStr)]
+#[derive(Debug, AsRefStr)]
 #[allow(non_camel_case_types)]
 pub enum ClientError {
     // LOGIN_FAIL,

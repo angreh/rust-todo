@@ -1,22 +1,24 @@
-use axum::{extract::State, response::IntoResponse, Json};
+use axum::{extract::State, Json};
 use mongodb::bson::{doc, Document};
-// use mongodb::bson::Document;
-use serde_json::json;
+use serde_json::{json, Value};
 
 use super::structs::TodoCreateUpdate;
-use crate::global_structs::app_state::AppState;
+use crate::global_structs::{api_error::ApiError, api_result::ApiResult, app_state::AppState};
 
 pub async fn handler(
     State(state): State<AppState>,
     Json(todo): Json<TodoCreateUpdate>,
-) -> impl IntoResponse {
+) -> ApiResult<Json<Value>> {
     println!("HANDLER: todo_create");
 
     let collection = state.database.collection::<Document>("todos");
-    let result = collection
+    let result = match collection
         .insert_one(doc! {"description": todo.description}, None)
         .await
-        .unwrap();
+    {
+        Ok(f) => f,
+        Err(_) => return Err(ApiError::ResourceActionFailNoDbConnection),
+    };
 
-    Json(json!({ "success": true, "id": result.inserted_id }))
+    Ok(Json(json!({ "success": true, "id": result.inserted_id })))
 }
