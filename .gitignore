@@ -30,4 +30,5 @@ coverage
 target/
 .vscode/
 Cargo.lock
+cypress.env.json
 db/
