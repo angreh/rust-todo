@@ -8,6 +8,10 @@ type EventCallback = (value: any) => void;
 const events = reactive<Events>({});
 
 export default function useEventBus() {
+  function getEventLen() {
+    return events.length;
+  }
+
   function emit(eventName: string, data: any = null) {
     const event = events[eventName];
 
