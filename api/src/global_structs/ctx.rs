@@ -1,3 +1,7 @@
+use async_trait::async_trait;
+use axum::extract::FromRequestParts;
+use axum::http::request::Parts;
+use axum::response::Response;
 use serde::Deserialize;
 
 #[derive(Clone, Debug, Deserialize)]
@@ -22,4 +26,17 @@ impl Ctx {
 pub struct User {
     pub name: String,
     pub id: String,
+}
+
+#[async_trait]
+impl<S: Send + Sync> FromRequestParts<S> for Ctx {
+    type Rejection = Response;
+
+    async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
+        println!("extractor-ish");
+
+        let ctx = parts.extensions.get::<Ctx>().unwrap().clone();
+
+        Ok(ctx)
+    }
 }
