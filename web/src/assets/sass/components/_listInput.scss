@@ -1,0 +1,48 @@
+#list-input {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 4px;
+
+  input,
+  button {
+    box-sizing: border-box;
+    border-radius: 4px;
+    line-height: 30px;
+    margin-bottom: 4px;
+  }
+
+  input {
+    width: 100%;
+    background-color: $light-blue;
+    color: $dark-blue;
+    border: 1px solid $blue;
+
+    margin-right: 4px;
+    padding: 0 8px;
+
+    &:focus {
+      outline: none;
+      background-color: $blue;
+    }
+  }
+
+  button {
+    border: 1px solid $orange;
+    background-color: $light-orange;
+    padding: 0 12px;
+    color: $dark-orange;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $orange;
+    }
+
+    &:disabled {
+      color: $orange;
+      background-color: $light-orange;
+    }
+  }
+}

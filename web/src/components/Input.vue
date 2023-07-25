@@ -15,11 +15,8 @@ function create() {
 </script>
 
 <template>
-  <div>
-    <input type="text" v-model="description" @keyup.enter="create" /><button
-      @click="create"
-      :disabled="!description">
-      yay
-    </button>
+  <div id="list-input">
+    <input type="text" v-model="description" @keyup.enter="create" />
+    <button @click="create" :disabled="!description">add</button>
   </div>
 </template>

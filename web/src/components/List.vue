@@ -43,6 +43,9 @@ onMounted(() => {
       <ListItem :item="item" />
     </div>
   </TransitionGroup>
+  <br />
+  <br />
+  <br />
 </template>
 
 <style>

@@ -1,16 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "./palette";
+
+@import "./components/listInput";
 @import "./components/listItem";
+@import "./components/todoTitle";
 
 @import "./views/mainDiv";
 
 html,
 body {
-  background-color: black;
+  background-color: $light-blue;
 }
 * {
-  color: white;
+  font-family: "Poppins", sans-serif;
 }
 
-input {
-  background-color: peru;
-  color: black;
+.icon {
+  width: 20px;
 }

@@ -3,10 +3,14 @@ import { useTodoStore } from "@/stores/todos";
 
 const store = useTodoStore();
 
-const props = defineProps(["item"]);
+defineProps(["item"]);
 
 function remove(id: string) {
   store.todo_remove(id);
+}
+
+function edit(id: string) {
+  store.todo_select(id);
 }
 </script>
 
@@ -17,7 +21,12 @@ function remove(id: string) {
     </div>
 
     <div class="list-item--action">
-      (&nbsp;<div @click="remove(item.id)">delete</div>&nbsp;|&nbsp;<div>edit</div>&nbsp;)
+      <div @click="remove(item.id)" class="item-button">
+        <img src="/close.svg" class="icon" />
+      </div>
+      <div @click="edit(item.id)" class="item-button">
+        <img src="/edit.svg" class="icon" />
+      </div>
     </div>
   </div>
 </template>

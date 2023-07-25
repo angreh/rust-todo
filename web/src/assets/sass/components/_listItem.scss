@@ -2,15 +2,36 @@
   display: flex;
   justify-content: space-between;
   border-radius: 4px;
-  background-color: #1c1c1c;
-  height: 40px;
+  background-color: $blue;
+  line-height: 40px;
   margin-bottom: 4px;
+  width: 480px;
+  padding: 0 4px 0 8px;
 
   &--title {
-    color: red;
+    color: $dark-blue;
   }
 
   &--action {
     display: flex;
+  }
+
+  .item-button {
+    background-color: $light-orange;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    margin-top: 4px;
+    border-radius: 4px;
+    margin-left: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $orange;
+    }
+
+    img {
+      padding-top: 6px;
+    }
   }
 }
