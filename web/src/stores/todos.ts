@@ -7,10 +7,11 @@ type ListItem = {
   controlID: string;
   description: string;
 };
+type ListItemPartial = { id: string; description: string };
 
 export const useTodoStore = defineStore("todo", () => {
   const todos = ref<ListItem[]>([]);
-  const selecteditem = reactive<{ id: string; description: string }>({
+  const selecteditem = reactive<ListItemPartial>({
     id: "",
     description: "",
   });
