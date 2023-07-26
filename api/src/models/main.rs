@@ -10,7 +10,7 @@ pub async fn handler_main() -> impl IntoResponse {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn it_works() {
+    fn handler_main() {
         assert_eq!(4, 2 + 2);
     }
 }

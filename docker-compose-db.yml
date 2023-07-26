@@ -1,0 +1,13 @@
+version: "3"
+services:
+  trvmongo:
+    image: mongo:4.4.8-focal
+    container_name: tvr-mongo
+    volumes:
+      - ./db/:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: tvr_todo
