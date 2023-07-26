@@ -63,7 +63,7 @@ export const useTodoStore = defineStore("todo", () => {
       // put real id
       const item = todos.value.find((item) => item.controlID == controlID)!;
       item.id = result.data.id.$oid;
-    } catch (_) {
+    } catch (e) {
       // rollback front
       setTimeout(() => {
         const index = todos.value.findIndex(

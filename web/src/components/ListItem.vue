@@ -21,10 +21,10 @@ function edit(id: string) {
     </div>
 
     <div class="list-item--action">
-      <div @click="remove(item.id)" class="item-button">
+      <div @click="remove(item.id)" class="item-button remove">
         <img src="/close.svg" class="icon" />
       </div>
-      <div @click="edit(item.id)" class="item-button">
+      <div @click="edit(item.id)" class="item-button edit">
         <img src="/edit.svg" class="icon" />
       </div>
     </div>
