@@ -39,8 +39,6 @@ describe("todos store", () => {
     // this is needed in case of failure
     await timeout(1500);
 
-    console.log(store.todos);
-
     expect(store.todos.length).toEqual(1);
   });
 });
